@@ -2,7 +2,7 @@ import AssignmentIcon from '@mui/icons-material/Assignment'
 import ChatIcon from '@mui/icons-material/Chat'
 import PeopleIcon from '@mui/icons-material/People'
 import AssessmentIcon from '@mui/icons-material/Assessment'
-import { ROUTE_PATHS } from '@/config/constants/Routes'
+import { ROUTE_PATHS } from '@/config/routes/Routes'
 
 /**
  * Drawer navigation items for the Engage layout.

@@ -1,8 +1,8 @@
 import { LayoutOutlet } from '@/app/lib/router'
-import DrawerMenu from '@/components/drawer/MenuDrawer'
-import TopNavBar from '@/components/breadcrumb/TopNavBar'
+import DrawerMenu from '@/components/MenuDrawer'
+import TopNavBar from '@/components/TopNavBar'
 import Typography from '@mui/material/Typography'
-import { ENGAGE_DRAWER_NAV_ITEMS } from '@/config/layouts/Engage'
+import { ENGAGE_DRAWER_NAV_ITEMS } from '@/config/EngageNavItems'
 
 function Engage() {
   return (

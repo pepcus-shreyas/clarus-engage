@@ -4,5 +4,6 @@ export {
   useClientNavigate,
   useRouteParams,
   useRouteLocation,
+  useRouteMatches,
   useQueryParams,
 } from './router.js'

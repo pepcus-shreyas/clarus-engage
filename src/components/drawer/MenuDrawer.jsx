@@ -6,7 +6,6 @@ import MuiAppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import List from '@mui/material/List';
 import CssBaseline from '@mui/material/CssBaseline';
-import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -102,36 +101,13 @@ export default function MenuDrawer({ drawerHeader, defaultOpen = false, contentH
   const theme = useTheme();
   const [open, setOpen] = React.useState(defaultOpen);
 
-  const handleDrawerOpen = () => {
-    setOpen(true);
-  };
-
-  const handleDrawerClose = () => {
-    setOpen(false);
+  const toggleDrawer = () => {
+    setOpen(!open);
   };
 
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
-      <AppBar position="fixed" open={open}>
-        <Toolbar>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
-            edge="start"
-            sx={[
-              {
-                marginRight: 5,
-              },
-              open && { display: 'none' },
-            ]}
-          >
-            <MenuIcon />
-          </IconButton>
-          {contentHeader}
-        </Toolbar>
-      </AppBar>
       <Drawer variant="permanent" open={open}>
         <DrawerHeader>
           <Box
@@ -146,8 +122,8 @@ export default function MenuDrawer({ drawerHeader, defaultOpen = false, contentH
           >
             {drawerHeader}
           </Box>
-          <IconButton onClick={handleDrawerClose}>
-            {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
+          <IconButton onClick={toggleDrawer}>
+            {open ? <ChevronLeftIcon /> : <ChevronRightIcon />}
           </IconButton>
         </DrawerHeader>
         <Divider />
@@ -202,62 +178,14 @@ export default function MenuDrawer({ drawerHeader, defaultOpen = false, contentH
             </ListItem>
           ))}
         </List>
-        <Divider />
-        <List>
-          {['All mail', 'Trash', 'Spam'].map((text, index) => (
-            <ListItem key={text} disablePadding sx={{ display: 'block' }}>
-              <ListItemButton
-                sx={[
-                  {
-                    minHeight: 48,
-                    px: 2.5,
-                  },
-                  open
-                    ? {
-                        justifyContent: 'initial',
-                      }
-                    : {
-                        justifyContent: 'center',
-                      },
-                ]}
-              >
-                <ListItemIcon
-                  sx={[
-                    {
-                      minWidth: 0,
-                      justifyContent: 'center',
-                    },
-                    open
-                      ? {
-                          mr: 3,
-                        }
-                      : {
-                          mr: 'auto',
-                        },
-                  ]}
-                >
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                </ListItemIcon>
-                <ListItemText
-                  primary={text}
-                  sx={[
-                    open
-                      ? {
-                          opacity: 1,
-                        }
-                      : {
-                          opacity: 0,
-                        },
-                  ]}
-                />
-              </ListItemButton>
-            </ListItem>
-          ))}
-        </List>
       </Drawer>
-      <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-        <DrawerHeader />
-        {content}
+      <Box>
+        <DrawerHeader sx={{ p: 2 }}>
+          {contentHeader}
+        </DrawerHeader>
+        <Box sx={{ p: 2 }}>
+          {content}
+        </Box>
       </Box>
     </Box>
   );

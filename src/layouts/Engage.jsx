@@ -6,7 +6,6 @@ import Typography from '@mui/material/Typography'
 function Engage() {
   return (
     <DrawerMenu
-      title="Engage"
       defaultOpen={false}
       contentHeader={<TopNavBar />}
       content={<LayoutOutlet />}

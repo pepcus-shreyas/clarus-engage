@@ -1,6 +1,6 @@
-import { defaultHttpClient } from '@/app/lib/http'
+import { defaultHttpClient as apiClient } from '@/app/lib/http'
 
 /** @returns {Promise<{ data: unknown }>} */
 export function fetchTodos() {
-  return defaultHttpClient.get('/todos')
+  return apiClient.get('/todos')
 }

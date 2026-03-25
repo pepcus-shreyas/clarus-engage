@@ -1,4 +1,11 @@
-import { createBrowserRouter, useLocation, useNavigate, useParams, useSearchParams } from 'react-router-dom'
+import {
+  createBrowserRouter,
+  useLocation,
+  useMatches,
+  useNavigate,
+  useParams,
+  useSearchParams,
+} from 'react-router-dom'
 
 /** Data router instance (swap implementation here if you change libraries). */
 export function createClientRouter(routes) {
@@ -15,6 +22,11 @@ export function useRouteParams() {
 
 export function useRouteLocation() {
   return useLocation()
+}
+
+/** Current route matches (root → leaf). Use `handle` on route objects for breadcrumbs. */
+export function useRouteMatches() {
+  return useMatches()
 }
 
 export function useQueryParams() {

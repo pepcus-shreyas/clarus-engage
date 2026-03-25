@@ -168,7 +168,7 @@ export default function MenuDrawer({
         </List>
       </Drawer>
       <Box>
-        <DrawerHeader sx={{ p: 2 }}>
+        <DrawerHeader sx={{ p: 2, justifyContent: 'flex-start' }}>
           {contentHeader}
         </DrawerHeader>
         <Box sx={{ p: 2 }}>

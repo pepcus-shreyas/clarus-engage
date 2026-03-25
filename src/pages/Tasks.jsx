@@ -1,42 +1,18 @@
-import { useEffect, useState } from 'react'
 import Box from '@mui/material/Box'
 import List from '@mui/material/List'
 import ListItem from '@mui/material/ListItem'
 import ListItemText from '@mui/material/ListItemText'
 import Typography from '@mui/material/Typography'
 import Loader from '@/components/Loader'
-import { fetchTodos } from '@/services/tasksService'
+import { useTodosQuery } from '@/hooks/useTodosQuery'
 import { useTasksStore } from '@/stores/tasksStore'
 
 function Tasks() {
-  const [loading, setLoading] = useState(true)
+  const { isFetching } = useTodosQuery()
   const filteredIds = useTasksStore((s) => s.filteredIds)
   const items = useTasksStore((s) => s.items)
-  const setTasksFromList = useTasksStore((s) => s.setTasksFromList)
 
-  useEffect(() => {
-    let cancelled = false
-
-    fetchTodos()
-      .then((res) => {
-        if (cancelled) return
-        setTasksFromList(res.data)
-      })
-      .catch((err) => {
-        if (cancelled) return
-        console.error('Tasks: failed to load /todos', err)
-      })
-      .finally(() => {
-        if (cancelled) return
-        setLoading(false)
-      })
-
-    return () => {
-      cancelled = true
-    }
-  }, [setTasksFromList])
-
-  if (loading) {
+  if (isFetching) {
     return <Loader aria-label="Loading tasks" />
   }
 

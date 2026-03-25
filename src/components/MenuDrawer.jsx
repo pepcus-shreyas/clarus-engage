@@ -1,7 +1,5 @@
 import * as React from 'react';
-import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
-import MuiDrawer from '@mui/material/Drawer';
 import List from '@mui/material/List';
 import CssBaseline from '@mui/material/CssBaseline';
 import Divider from '@mui/material/Divider';
@@ -13,63 +11,7 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import { RouterLink, useRouteLocation } from '@/app/lib/router';
-
-const drawerWidth = 240;
-
-const openedMixin = (theme) => ({
-  width: drawerWidth,
-  transition: theme.transitions.create('width', {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.enteringScreen,
-  }),
-  overflowX: 'hidden',
-});
-
-const closedMixin = (theme) => ({
-  transition: theme.transitions.create('width', {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.leavingScreen,
-  }),
-  overflowX: 'hidden',
-  width: `calc(${theme.spacing(7)} + 1px)`,
-  [theme.breakpoints.up('sm')]: {
-    width: `calc(${theme.spacing(8)} + 1px)`,
-  },
-});
-
-const DrawerHeader = styled('div')(({ theme }) => ({
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'flex-end',
-  padding: theme.spacing(0, 1),
-  // necessary for content to be below app bar
-  ...theme.mixins.toolbar,
-}));
-
-const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
-  ({ theme }) => ({
-    width: drawerWidth,
-    flexShrink: 0,
-    whiteSpace: 'nowrap',
-    boxSizing: 'border-box',
-    variants: [
-      {
-        props: ({ open }) => open,
-        style: {
-          ...openedMixin(theme),
-          '& .MuiDrawer-paper': openedMixin(theme),
-        },
-      },
-      {
-        props: ({ open }) => !open,
-        style: {
-          ...closedMixin(theme),
-          '& .MuiDrawer-paper': closedMixin(theme),
-        },
-      },
-    ],
-  }),
-);
+import { Drawer, DrawerHeader, menuDrawerSx } from '@/styles/components/MenuDrawer';
 
 export default function MenuDrawer({
   drawerHeader,
@@ -86,20 +28,11 @@ export default function MenuDrawer({
   };
 
   return (
-    <Box sx={{ display: 'flex' }}>
+    <Box sx={menuDrawerSx.root}>
       <CssBaseline />
       <Drawer variant="permanent" open={open}>
         <DrawerHeader>
-          <Box
-            sx={{
-              flexGrow: 1,
-              minWidth: 0,
-              mr: 1,
-              pl: 1,
-              display: open ? 'block' : 'none',
-              overflow: 'hidden',
-            }}
-          >
+          <Box sx={menuDrawerSx.drawerHeaderContent(open)}>
             {drawerHeader}
           </Box>
           <IconButton onClick={toggleDrawer}>
@@ -114,52 +47,18 @@ export default function MenuDrawer({
               ? { component: RouterLink, to: item.to }
               : {}
             return (
-              <ListItem key={item.key} disablePadding sx={{ display: 'block' }}>
+              <ListItem key={item.key} disablePadding sx={menuDrawerSx.listItem}>
                 <ListItemButton
                   {...linkProps}
                   selected={Boolean(item.to && pathname === item.to)}
-                  sx={[
-                    {
-                      minHeight: 48,
-                      px: 2.5,
-                    },
-                    open
-                      ? {
-                          justifyContent: 'initial',
-                        }
-                      : {
-                          justifyContent: 'center',
-                        },
-                  ]}
+                  sx={menuDrawerSx.listItemButton(open)}
                 >
-                  <ListItemIcon
-                    sx={[
-                      {
-                        minWidth: 0,
-                        justifyContent: 'center',
-                      },
-                      open
-                        ? {
-                            mr: 3,
-                          }
-                        : {
-                            mr: 'auto',
-                          },
-                    ]}
-                  >
+                  <ListItemIcon sx={menuDrawerSx.listItemIcon(open)}>
                     {IconComponent ? <IconComponent /> : null}
                   </ListItemIcon>
                   <ListItemText
                     primary={item.label}
-                    sx={[
-                      open
-                        ? {
-                            opacity: 1,
-                          }
-                        : {
-                            opacity: 0,
-                          },
-                    ]}
+                    sx={menuDrawerSx.listItemText(open)}
                   />
                 </ListItemButton>
               </ListItem>
@@ -168,10 +67,10 @@ export default function MenuDrawer({
         </List>
       </Drawer>
       <Box>
-        <DrawerHeader sx={{ p: 2, justifyContent: 'flex-start' }}>
+        <DrawerHeader sx={menuDrawerSx.contentHeader}>
           {contentHeader}
         </DrawerHeader>
-        <Box sx={{ p: 2 }}>
+        <Box sx={menuDrawerSx.content}>
           {content}
         </Box>
       </Box>
